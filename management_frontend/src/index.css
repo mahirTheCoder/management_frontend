@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+
+@utility container {
+  margin-inline: auto;
+}
+
+
+
+@theme {
+  --color-prim: #071C1F;
+  --color-brand: #80B500;
+  
+  --bg-brand: #80B500;
+  --bg-com: #F7F5EB;
+  --bg-card: #FFFFFF;
+  
+
+  --font-prim: "Rajdhani", sans-serif;
+  --font-sec: "DM Sans", sans-serif;
+}
+
+
