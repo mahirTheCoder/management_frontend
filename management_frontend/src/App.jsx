@@ -9,6 +9,7 @@ import ProtectedRoute from "./Componets/ui/ProtectedRoute";
 import SignUp from "./pages/SignUp";
 import VerifyOTP from "./pages/VerifyOTP";
 import ResendOTP from "./pages/ResendOTP";
+import ForgotPassword from "./pages/ForgotPassword";
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
           <Route path="/signUp" element={<SignUp />} />
           <Route path="/VerifyOTP" element={<VerifyOTP />} />
           <Route path="/ResendOTP" element={<ResendOTP />} />
+          <Route path="/ForgotPassword" element={<ForgotPassword />} />
 
           {/* Protected Route */}
         </Routes>
