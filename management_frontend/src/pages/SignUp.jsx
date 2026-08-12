@@ -13,9 +13,9 @@ import {
 } from "react-icons/fi";
 
 import api from "../service/api";
+import { signup } from "../service/authApi";
 
 const SignUp = () => {
-
   const navigate = useNavigate();
 
   // ================= FORM =================
@@ -25,7 +25,6 @@ const SignUp = () => {
     password: "",
     role: "student",
   });
-
 
   const [errors, setErrors] = useState({
     fullname: false,
@@ -68,11 +67,7 @@ const SignUp = () => {
     };
 
     // কোনো field empty হলে
-    if (
-      newErrors.fullname ||
-      newErrors.email ||
-      newErrors.password
-    ) {
+    if (newErrors.fullname || newErrors.email || newErrors.password) {
       setErrors(newErrors);
       return;
     }
@@ -82,11 +77,10 @@ const SignUp = () => {
 
       // ================= API =================
 
-      const res = await api.post("/auth/signup", {
-        fullname: formData.fullname,
-        email: formData.email,
-        password: formData.password,
-        role: formData.role,
+      const res = await signup({
+        fullname,
+        email,
+        password,
       });
 
       // ================= SUCCESS =================
@@ -94,7 +88,7 @@ const SignUp = () => {
       if (res.data.success) {
         toast.success("OTP sent to your email");
 
-        navigate("/verify-otp", {
+        navigate("/VerifyOTP", {
           state: {
             email: formData.email,
           },
@@ -105,9 +99,7 @@ const SignUp = () => {
 
       const message = error.response?.data?.message;
 
-      toast.error(
-        message || "Something went wrong during registration"
-      );
+      toast.error(message || "Something went wrong during registration");
     } finally {
       setLoading(false);
     }
@@ -118,7 +110,6 @@ const SignUp = () => {
   return (
     <main className="min-h-screen bg-[#e6e9ef] text-[#2d3748] flex items-center justify-center p-4 py-10">
       <div className="w-full max-w-120 neu-card p-6 sm:p-10">
-
         {/* ================= HEADER ================= */}
 
         <div className="mb-8 text-center">
@@ -130,20 +121,14 @@ const SignUp = () => {
         {/* ================= FORM CONTAINER ================= */}
 
         <div className="neu-container-inset p-6 sm:p-8">
-
           <p className="text-center text-sm font-medium text-[#5a677d] mb-6">
             Register New Account
           </p>
 
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col gap-4"
-          >
-
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             {/* ================= FULL NAME ================= */}
 
             <div className="flex flex-col gap-1.5">
-
               <label
                 htmlFor="fullname"
                 className="text-xs font-semibold text-[#4a5568] ml-1"
@@ -156,7 +141,6 @@ const SignUp = () => {
                   errors.fullname ? "neu-input-error" : ""
                 }`}
               >
-
                 <FiUser className="text-[#a0aec0] h-4 w-4 shrink-0 mr-3" />
 
                 <input
@@ -172,15 +156,12 @@ const SignUp = () => {
                   }
                   className="w-full bg-transparent text-sm text-[#2d3748] outline-none placeholder:text-[#a0aec0]"
                 />
-
               </div>
-
             </div>
 
             {/* ================= EMAIL ================= */}
 
             <div className="flex flex-col gap-1.5">
-
               <label
                 htmlFor="email"
                 className="text-xs font-semibold text-[#4a5568] ml-1"
@@ -193,7 +174,6 @@ const SignUp = () => {
                   errors.email ? "neu-input-error" : ""
                 }`}
               >
-
                 <FiMail className="text-[#a0aec0] h-4 w-4 shrink-0 mr-3" />
 
                 <input
@@ -203,21 +183,16 @@ const SignUp = () => {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder={
-                    errors.email
-                      ? "Email is required"
-                      : "Enter your email"
+                    errors.email ? "Email is required" : "Enter your email"
                   }
                   className="w-full bg-transparent text-sm text-[#2d3748] outline-none placeholder:text-[#a0aec0]"
                 />
-
               </div>
-
             </div>
 
             {/* ================= PASSWORD ================= */}
 
             <div className="flex flex-col gap-1.5">
-
               <label
                 htmlFor="password"
                 className="text-xs font-semibold text-[#4a5568] ml-1"
@@ -230,7 +205,6 @@ const SignUp = () => {
                   errors.password ? "neu-input-error" : ""
                 }`}
               >
-
                 <FiLock className="text-[#a0aec0] h-4 w-4 shrink-0 mr-3" />
 
                 <input
@@ -249,9 +223,7 @@ const SignUp = () => {
 
                 <button
                   type="button"
-                  onClick={() =>
-                    setShowPassword((prev) => !prev)
-                  }
+                  onClick={() => setShowPassword((prev) => !prev)}
                   className="absolute right-3 text-[#a0aec0] hover:text-[#4a5568] transition-colors"
                 >
                   {showPassword ? (
@@ -260,15 +232,12 @@ const SignUp = () => {
                     <FiEye className="h-4 w-4" />
                   )}
                 </button>
-
               </div>
-
             </div>
 
             {/* ================= ROLE ================= */}
 
             <div className="flex flex-col gap-1.5">
-
               <label
                 htmlFor="role"
                 className="text-xs font-semibold text-[#4a5568] ml-1"
@@ -277,7 +246,6 @@ const SignUp = () => {
               </label>
 
               <div className="neu-input-wrapper relative flex h-12 items-center px-4">
-
                 <FiBriefcase className="text-[#a0aec0] h-4 w-4 shrink-0 mr-3" />
 
                 <select
@@ -301,15 +269,12 @@ const SignUp = () => {
                     Teacher
                   </option>
                 </select>
-
               </div>
-
             </div>
 
             {/* ================= SUBMIT BUTTON ================= */}
 
             <div className="mt-4 flex justify-center">
-
               <button
                 type="submit"
                 disabled={loading}
@@ -317,32 +282,35 @@ const SignUp = () => {
               >
                 {loading ? "Registering..." : "REGISTER NOW"}
 
-                {!loading && (
-                  <FiArrowRight className="h-4 w-4" />
-                )}
+                {!loading && <FiArrowRight className="h-4 w-4" />}
               </button>
-
+              
             </div>
-
           </form>
-
         </div>
 
         {/* ================= FOOTER ================= */}
 
         <div className="mt-6 text-center text-xs font-medium text-[#64748b]">
-
           Already have an account?{" "}
-
           <Link
             to="/signIn"
             className="font-bold text-[#3b82f6] hover:underline"
           >
             Sign In
           </Link>
-
+        
         </div>
-
+        <div className="mt-6 text-center text-xs font-medium text-[#64748b]">
+       
+          <Link
+            to="/VerifyOTP"
+            className="font-bold text-[#3b82f6] hover:underline"
+          >
+            VerifyOTP
+          </Link>
+        
+        </div>
       </div>
     </main>
   );

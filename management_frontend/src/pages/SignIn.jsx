@@ -2,15 +2,10 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-import {
-  FiMail,
-  FiLock,
-  FiEye,
-  FiEyeOff,
-  FiArrowRight,
-} from "react-icons/fi";
+import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight } from "react-icons/fi";
 
 import api from "../service/api";
+import { signin } from "../service/authApi";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -63,7 +58,7 @@ const SignIn = () => {
     try {
       setLoading(true);
 
-      const res = await api.post("/auth/signin", {
+      const res = await signin({
         email: formData.email,
         password: formData.password,
       });
@@ -86,10 +81,7 @@ const SignIn = () => {
         return;
       }
 
-      if (
-        status === 403 &&
-        message === "Please verify your email first"
-      ) {
+      if (status === 403 && message === "Please verify your email first") {
         toast.error("Please verify your email first");
         return;
       }
@@ -113,7 +105,6 @@ const SignIn = () => {
   return (
     <main className="min-h-screen bg-[#e6e9ef] text-[#2d3748] flex items-center justify-center p-4">
       <div className="w-full max-w-115 neu-card p-6 sm:p-10">
-
         {/* ================= HEADER ================= */}
         <div className="mb-8 text-center">
           <h1 className="text-2xl font-black tracking-wider uppercase text-[#3a4454]">
@@ -128,10 +119,12 @@ const SignIn = () => {
           </p>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-
             {/* ================= EMAIL ================= */}
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="email" className="text-xs font-semibold text-[#4a5568] ml-1">
+              <label
+                htmlFor="email"
+                className="text-xs font-semibold text-[#4a5568] ml-1"
+              >
                 Email Address
               </label>
 
@@ -147,7 +140,9 @@ const SignIn = () => {
                   type="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder={errors.email ? "Email is required" : "Enter your email"}
+                  placeholder={
+                    errors.email ? "Email is required" : "Enter your email"
+                  }
                   className="w-full bg-transparent text-sm text-[#2d3748] outline-none placeholder:text-[#a0aec0]"
                 />
               </div>
@@ -155,7 +150,10 @@ const SignIn = () => {
 
             {/* ================= PASSWORD ================= */}
             <div className="flex flex-col gap-1.5">
-              <label htmlFor="password" className="text-xs font-semibold text-[#4a5568] ml-1">
+              <label
+                htmlFor="password"
+                className="text-xs font-semibold text-[#4a5568] ml-1"
+              >
                 Password
               </label>
 
@@ -171,7 +169,11 @@ const SignIn = () => {
                   type={showPassword ? "text" : "password"}
                   value={formData.password}
                   onChange={handleChange}
-                  placeholder={errors.password ? "Password is required" : "Enter your password"}
+                  placeholder={
+                    errors.password
+                      ? "Password is required"
+                      : "Enter your password"
+                  }
                   className="w-full bg-transparent text-sm text-[#2d3748] outline-none placeholder:text-[#a0aec0] pr-8"
                 />
 
@@ -218,7 +220,6 @@ const SignIn = () => {
                 {!loading && <FiArrowRight className="h-4 w-4" />}
               </button>
             </div>
-
           </form>
         </div>
 
@@ -232,7 +233,6 @@ const SignIn = () => {
             signUp
           </Link>
         </div>
-
       </div>
     </main>
   );
