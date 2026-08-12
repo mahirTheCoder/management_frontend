@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router";
 import toast from "react-hot-toast";
 import { FiArrowRight } from "react-icons/fi";
 
@@ -96,7 +96,6 @@ const VerifyOTP = () => {
     try {
       setLoading(true);
 
-    //   ---------api call to verify OTP
       const res = await verifyOtp({
         email,
         otp: otpString,
@@ -265,11 +264,14 @@ const VerifyOTP = () => {
                   {timer}s
                 </span>
               </span>
+             
             )}
 
           </div>
+          
 
         </div>
+        
       </div>
     </main>
   );

@@ -8,6 +8,7 @@ import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./Componets/ui/ProtectedRoute";
 import SignUp from "./pages/SignUp";
 import VerifyOTP from "./pages/VerifyOTP";
+import ResendOTP from "./pages/ResendOTP";
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="/signIn" element={<SignIn />} />
           <Route path="/signUp" element={<SignUp />} />
           <Route path="/VerifyOTP" element={<VerifyOTP />} />
+          <Route path="/ResendOTP" element={<ResendOTP />} />
 
           {/* Protected Route */}
         </Routes>

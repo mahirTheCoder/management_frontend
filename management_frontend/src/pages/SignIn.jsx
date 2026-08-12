@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router";
 import toast from "react-hot-toast";
 
 import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight } from "react-icons/fi";
@@ -192,7 +192,7 @@ const SignIn = () => {
 
               <div className="flex justify-end mt-1">
                 <Link
-                  to="/forgot-password"
+                  to="/ForgotPassword"
                   className="text-xs text-[#5b6e8a] hover:text-[#2d3748] font-medium transition-colors"
                 >
                   Forgot password?

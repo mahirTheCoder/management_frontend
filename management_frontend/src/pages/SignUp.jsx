@@ -303,12 +303,12 @@ const SignUp = () => {
         </div>
         <div className="mt-6 text-center text-xs font-medium text-[#64748b]">
        
-          <Link
+          {/* <Link
             to="/VerifyOTP"
             className="font-bold text-[#3b82f6] hover:underline"
           >
             VerifyOTP
-          </Link>
+          </Link> */}
         
         </div>
       </div>
