@@ -164,7 +164,7 @@ const VerifyOTP = () => {
 
   return (
     <main className="min-h-screen bg-[#e6e9ef] text-[#2d3748] flex items-center justify-center p-4">
-      <div className="w-full max-w-[400px] neu-card p-6 sm:p-8">
+      <div className="w-full max-w-100 neu-card p-6 sm:p-8">
 
         {/* ================= HEADER ================= */}
 
@@ -199,7 +199,7 @@ const VerifyOTP = () => {
               {otp.map((digit, index) => (
                 <div
                   key={index}
-                  className="neu-input-wrapper h-[50px] w-[46px] flex items-center justify-center"
+                  className="neu-input-wrapper h-12.5 w-11.5 flex items-center justify-center"
                 >
                   <input
                     ref={(el) => {

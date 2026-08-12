@@ -93,7 +93,7 @@ const ResetPassword = () => {
 
   return (
     <main className="min-h-screen bg-[#e6e9ef] text-[#2d3748] flex items-center justify-center p-4">
-      <div className="w-full max-w-[420px] neu-card p-6 sm:p-8">
+      <div className="w-full max-w-105 neu-card p-6 sm:p-8">
         {/* Header */}
         <div className="mb-6 text-center">
           <h1 className="text-xl font-bold tracking-wider text-[#3a4454] uppercase">
@@ -118,7 +118,7 @@ const ResetPassword = () => {
               </label>
 
               <div
-                className={`neu-input-wrapper relative flex h-[48px] items-center px-4 ${
+                className={`neu-input-wrapper relative flex h-12 items-center px-4 ${
                   errors.password ? "neu-input-error" : ""
                 }`}
               >
@@ -160,7 +160,7 @@ const ResetPassword = () => {
               </label>
 
               <div
-                className={`neu-input-wrapper relative flex h-[48px] items-center px-4 ${
+                className={`neu-input-wrapper relative flex h-12 items-center px-4 ${
                   errors.confirmPassword ? "neu-input-error" : ""
                 }`}
               >

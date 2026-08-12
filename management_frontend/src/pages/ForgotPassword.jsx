@@ -57,7 +57,7 @@ const ForgotPassword = () => {
 
   return (
     <main className="min-h-screen bg-[#e6e9ef] text-[#2d3748] flex items-center justify-center p-4">
-      <div className="w-full max-w-[420px] neu-card p-6 sm:p-8">
+      <div className="w-full max-w-105 neu-card p-6 sm:p-8">
 
         {/* ================= HEADER ================= */}
         <div className="mb-6 text-center">
@@ -87,7 +87,7 @@ const ForgotPassword = () => {
               </label>
 
               <div
-                className={`neu-input-wrapper relative flex h-[48px] items-center px-4 ${
+                className={`neu-input-wrapper relative flex h-12 items-center px-4 ${
                   error ? "neu-input-error" : ""
                 }`}
               >
