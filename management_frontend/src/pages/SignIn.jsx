@@ -16,7 +16,6 @@ const SignIn = () => {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
-
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -29,7 +28,7 @@ const SignIn = () => {
 
   const [loading, setLoading] = useState(false);
 
-  // ---------------- Input Change ----------------
+  // ================= INPUT CHANGE =================
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -38,7 +37,6 @@ const SignIn = () => {
       [name]: value,
     }));
 
-    // Error remove when user starts typing
     if (value.trim()) {
       setErrors((prev) => ({
         ...prev,
@@ -47,20 +45,18 @@ const SignIn = () => {
     }
   };
 
-  // ---------------- Sign In ----------------
+  // ================= SIGN IN =================
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const emailEmpty = !formData.email.trim();
     const passwordEmpty = !formData.password.trim();
 
-    // Required validation
     if (emailEmpty || passwordEmpty) {
       setErrors({
         email: emailEmpty,
         password: passwordEmpty,
       });
-
       return;
     }
 
@@ -74,7 +70,6 @@ const SignIn = () => {
 
       if (res.data.success) {
         toast.success("Login successful");
-
         navigate("/");
       }
     } catch (error) {
@@ -83,7 +78,6 @@ const SignIn = () => {
       const status = error.response?.status;
       const message = error.response?.data?.message;
 
-      // Only Admin Approval Toast
       if (
         status === 403 &&
         message === "Your account is waiting for admin approval"
@@ -92,250 +86,154 @@ const SignIn = () => {
         return;
       }
 
-      // Email not verified
       if (
         status === 403 &&
         message === "Please verify your email first"
       ) {
-        setErrors({
-          email: true,
-          password: true,
-        });
-
+        toast.error("Please verify your email first");
         return;
       }
 
-      // Wrong email/password
       if (status === 401) {
         setErrors({
           email: true,
           password: true,
         });
 
+        toast.error("Invalid email or password");
         return;
       }
+
+      toast.error(message || "Something went wrong");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <main className="min-h-screen bg-[#f7f8fc] text-[#17171c]">
+    <main className="min-h-screen bg-[#e6e9ef] text-[#2d3748] flex items-center justify-center p-4">
+      <div className="w-full max-w-[460px] neu-card p-6 sm:p-10">
 
-      <div className="flex min-h-screen items-center justify-center px-4 py-10">
+        {/* ================= HEADER ================= */}
+        <div className="mb-8 text-center">
+          <h1 className="text-2xl font-black tracking-wider uppercase text-[#3a4454]">
+            USER AUTHENTICATION
+          </h1>
+        </div>
 
-        <div className="w-full max-w-[440px]">
+        {/* ================= INSET FORM SECTION ================= */}
+        <div className="neu-container-inset p-6 sm:p-8">
+          <p className="text-center text-sm font-medium text-[#5a677d] mb-6">
+            Sign In To Your Account
+          </p>
 
-          {/* Header */}
-          <div className="mb-8 text-center">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-5">
 
-            <h1 className="text-3xl font-bold tracking-tight text-[#17171c]">
-              Welcome back
-            </h1>
-
-            <p className="mt-2 text-sm text-[#777783]">
-              Sign in to continue to your account
-            </p>
-
-          </div>
-
-          {/* Card */}
-          <div className="rounded-[24px] border border-[#e8e8ee] bg-white p-6 shadow-[0_20px_60px_rgba(20,20,40,0.08)] sm:p-8">
-
-            <form onSubmit={handleSubmit} className="space-y-6">
-
-              {/* ================= EMAIL ================= */}
-              <div className="relative">
-
-                <div
-                  className={`group relative rounded-xl border bg-[#fafafd] transition-all
-                    ${
-                      errors.email
-                        ? "border-red-500"
-                        : "border-[#e3e3e9] focus-within:border-violet-400"
-                    }
-                  `}
-                >
-
-                  <FiMail
-                    size={18}
-                    className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors
-                      ${
-                        errors.email
-                          ? "text-red-500"
-                          : "text-[#9a9aa5] group-focus-within:text-violet-500"
-                      }
-                    `}
-                  />
-
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder={
-                      errors.email ? "" : "Enter your email"
-                    }
-                    className="h-12 w-full rounded-xl bg-transparent pl-11 pr-4 text-sm text-[#17171c] outline-none placeholder:text-[#aaaab4]"
-                  />
-
-                  {/* Floating Error Label */}
-                  {errors.email && (
-                    <span className="absolute -top-2 left-3 bg-white px-2 text-xs font-medium text-red-500">
-                      Email is required
-                    </span>
-                  )}
-
-                </div>
-
-              </div>
-
-              {/* ================= PASSWORD ================= */}
-              <div className="relative">
-
-                <div
-                  className={`group relative rounded-xl border bg-[#fafafd] transition-all
-                    ${
-                      errors.password
-                        ? "border-red-500"
-                        : "border-[#e3e3e9] focus-within:border-violet-400"
-                    }
-                  `}
-                >
-
-                  <FiLock
-                    size={18}
-                    className={`absolute left-4 top-1/2 -translate-y-1/2 transition-colors
-                      ${
-                        errors.password
-                          ? "text-red-500"
-                          : "text-[#9a9aa5] group-focus-within:text-violet-500"
-                      }
-                    `}
-                  />
-
-                  <input
-                    id="password"
-                    name="password"
-                    type={showPassword ? "text" : "password"}
-                    value={formData.password}
-                    onChange={handleChange}
-                    placeholder={
-                      errors.password ? "" : "Enter your password"
-                    }
-                    className="h-12 w-full rounded-xl bg-transparent pl-11 pr-12 text-sm text-[#17171c] outline-none placeholder:text-[#aaaab4]"
-                  />
-
-                  {/* Floating Error Label */}
-                  {errors.password && (
-                    <span className="absolute -top-2 left-3 bg-white px-2 text-xs font-medium text-red-500">
-                      Password is required
-                    </span>
-                  )}
-
-                  {/* Show Password */}
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className={`absolute right-4 top-1/2 -translate-y-1/2 transition
-                      ${
-                        errors.password
-                          ? "text-red-400 hover:text-red-500"
-                          : "text-[#9a9aa5] hover:text-[#34343d]"
-                      }
-                    `}
-                  >
-                    {showPassword ? (
-                      <FiEyeOff size={18} />
-                    ) : (
-                      <FiEye size={18} />
-                    )}
-                  </button>
-
-                </div>
-
-                {/* Forgot Password */}
-                <div className="mt-2 text-right">
-
-                  <Link
-                    to="/forgot-password"
-                    className="text-xs font-medium text-violet-600 transition hover:text-violet-700"
-                  >
-                    Forgot password?
-                  </Link>
-
-                </div>
-
-              </div>
-
-              {/* Remember Me */}
-              <label className="flex cursor-pointer items-center gap-2 text-sm text-[#777783]">
-
-                <input
-                  type="checkbox"
-                  className="h-4 w-4 rounded border-[#d8d8df] accent-violet-600"
-                />
-
-                Remember me
-
+            {/* ================= EMAIL ================= */}
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="email" className="text-xs font-semibold text-[#4a5568] ml-1">
+                Email Address
               </label>
 
-              {/* Sign In Button */}
+              <div
+                className={`neu-input-wrapper relative flex h-[48px] items-center px-4 ${
+                  errors.email ? "neu-input-error" : ""
+                }`}
+              >
+                <FiMail className="text-[#a0aec0] h-4 w-4 shrink-0 mr-3" />
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder={errors.email ? "Email is required" : "Enter your email"}
+                  className="w-full bg-transparent text-sm text-[#2d3748] outline-none placeholder:text-[#a0aec0]"
+                />
+              </div>
+            </div>
+
+            {/* ================= PASSWORD ================= */}
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="password" className="text-xs font-semibold text-[#4a5568] ml-1">
+                Password
+              </label>
+
+              <div
+                className={`neu-input-wrapper relative flex h-[48px] items-center px-4 ${
+                  errors.password ? "neu-input-error" : ""
+                }`}
+              >
+                <FiLock className="text-[#a0aec0] h-4 w-4 shrink-0 mr-3" />
+                <input
+                  id="password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder={errors.password ? "Password is required" : "Enter your password"}
+                  className="w-full bg-transparent text-sm text-[#2d3748] outline-none placeholder:text-[#a0aec0] pr-8"
+                />
+
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute right-3 text-[#a0aec0] hover:text-[#4a5568] transition-colors"
+                >
+                  {showPassword ? (
+                    <FiEyeOff className="h-4 w-4" />
+                  ) : (
+                    <FiEye className="h-4 w-4" />
+                  )}
+                </button>
+              </div>
+
+              <div className="flex justify-end mt-1">
+                <Link
+                  to="/forgot-password"
+                  className="text-xs text-[#5b6e8a] hover:text-[#2d3748] font-medium transition-colors"
+                >
+                  Forgot password?
+                </Link>
+              </div>
+            </div>
+
+            {/* ================= REMEMBER ME ================= */}
+            <label className="flex items-center gap-2 text-xs font-medium text-[#5a677d] cursor-pointer my-1">
+              <input
+                type="checkbox"
+                className="rounded accent-[#4b5563] cursor-pointer"
+              />
+              <span>Remember me</span>
+            </label>
+
+            {/* ================= SUBMIT BUTTON ================= */}
+            <div className="mt-2 flex justify-center">
               <button
                 type="submit"
                 disabled={loading}
-                className="group flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#17171c] text-sm font-semibold text-white shadow-lg shadow-black/10 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#25252c] hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-60"
+                className="neu-button px-8 py-2.5 text-xs font-bold uppercase tracking-wider text-[#3a4454] flex items-center justify-center gap-2 hover:text-[#1a202c] disabled:opacity-60"
               >
-
-                {loading ? "Signing in..." : "Sign In"}
-
-                {!loading && (
-                  <FiArrowRight
-                    size={17}
-                    className="transition-transform duration-300 group-hover:translate-x-1"
-                  />
-                )}
-
+                {loading ? "Signing in..." : "SIGN IN"}
+                {!loading && <FiArrowRight className="h-4 w-4" />}
               </button>
-
-            </form>
-
-            {/* Divider */}
-            <div className="my-7 flex items-center gap-4">
-
-              <div className="h-px flex-1 bg-[#eeeeF2]" />
-
-              <span className="text-xs text-[#a0a0aa]">
-                OR
-              </span>
-
-              <div className="h-px flex-1 bg-[#eeeeF2]" />
-
             </div>
 
-            {/* Register */}
-            <div className="text-center text-sm text-[#777783]">
+          </form>
+        </div>
 
-              Don't have an account?{" "}
-
-              <Link
-                to="/register"
-                className="font-semibold text-violet-600 transition hover:text-violet-700"
-              >
-                Register Now
-              </Link>
-
-            </div>
-
-          </div>
-
-     
-
+        {/* ================= FOOTER / REGISTER ================= */}
+        <div className="mt-6 text-center text-xs font-medium text-[#64748b]">
+          Don't have an account?{" "}
+          <Link
+            to="/register"
+            className="font-bold text-[#3b82f6] hover:underline"
+          >
+            Register Now
+          </Link>
         </div>
 
       </div>
-
     </main>
   );
 };

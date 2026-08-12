@@ -1,11 +1,8 @@
 @import "tailwindcss";
 
-
 @utility container {
   margin-inline: auto;
 }
-
-
 
 @theme {
   --color-prim: #071C1F;
@@ -15,9 +12,46 @@
   --bg-com: #F7F5EB;
   --bg-card: #FFFFFF;
   
-
   --font-prim: "Rajdhani", sans-serif;
   --font-sec: "DM Sans", sans-serif;
 }
 
+/* ================= NEUMORPHIC UI UTILITIES ================= */
 
+@utility neu-card {
+  background-color: #e6e9ef;
+  box-shadow: 20px 20px 60px #c4c7cc, -20px -20px 60px #ffffff;
+  border-radius: 28px;
+}
+
+@utility neu-container-inset {
+  background-color: #e6e9ef;
+  box-shadow: inset 6px 6px 12px #c4c7cc, inset -6px -6px 12px #ffffff;
+  border-radius: 20px;
+}
+
+@utility neu-input-wrapper {
+  background-color: #e6e9ef;
+  box-shadow: inset 4px 4px 8px #c5c8cd, inset -4px -4px 8px #ffffff;
+  border-radius: 12px;
+  transition: all 0.2s ease-in-out;
+}
+
+@utility neu-input-error {
+  box-shadow: inset 3px 3px 6px #f87171, inset -3px -3px 6px #ffffff !important;
+}
+
+@utility neu-button {
+  background-color: #e6e9ef;
+  box-shadow: 6px 6px 14px #c4c7cc, -6px -6px 14px #ffffff;
+  border-radius: 12px;
+  transition: all 0.15s ease;
+
+  &:hover {
+    box-shadow: 4px 4px 10px #c4c7cc, -4px -4px 10px #ffffff;
+  }
+
+  &:active {
+    box-shadow: inset 4px 4px 8px #c4c7cc, inset -4px -4px 8px #ffffff;
+  }
+}

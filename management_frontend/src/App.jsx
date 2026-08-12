@@ -22,6 +22,7 @@ const App = () => {
           />
           {/* Public Route */}
           <Route path="/login" element={<SignIn />} />
+          <Route path="/login" element={<SignIn />} />
 
           {/* Protected Route */}
         </Routes>
