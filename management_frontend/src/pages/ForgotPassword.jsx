@@ -1,13 +1,11 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router";
 import toast from "react-hot-toast";
 import { FiMail, FiArrowRight, FiArrowLeft } from "react-icons/fi";
 
-import api from "../service/api";
+import { forgotPassword } from "../service/authApi";
 
 const ForgotPassword = () => {
-  const navigate = useNavigate();
-
   const [email, setEmail] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -25,32 +23,16 @@ const ForgotPassword = () => {
     try {
       setLoading(true);
 
-      // Backend route:
-      // POST /auth/forgotPassword
-      const res = await api.post("/auth/forgotPassword", {
+      // API call from authApi.js
+      const res = await forgotPassword({
         email: email.trim(),
       });
 
       if (res.data?.success) {
         toast.success(
-          res.data?.message || "Password reset link sent to your email!"
+          res.data?.message ||
+            "Password reset link sent to your email!"
         );
-
-        /*
-         * IMPORTANT:
-         * তোমার backend route অনুযায়ী forgotPassword
-         * reset token/link generate করে।
-         *
-         * তাই এখানে verify-otp এ পাঠানো হচ্ছে না।
-         *
-         * যদি backend response-এ resetToken দেয়,
-         * তাহলে সেই token নিয়ে reset-password page-এ
-         * navigate করা যাবে।
-         */
-
-        if (res.data?.resetToken) {
-          navigate(`/reset-password/${res.data.resetToken}`);
-        }
       }
     } catch (error) {
       console.error("Forgot Password Error:", error);
@@ -59,11 +41,15 @@ const ForgotPassword = () => {
       const message = error.response?.data?.message;
 
       if (status === 404) {
-        toast.error(message || "No account found with this email");
+        toast.error(
+          message || "No account found with this email"
+        );
         return;
       }
 
-      toast.error(message || "Failed to send password reset link");
+      toast.error(
+        message || "Failed to send password reset link"
+      );
     } finally {
       setLoading(false);
     }
@@ -148,7 +134,7 @@ const ForgotPassword = () => {
         {/* ================= BACK TO SIGN IN ================= */}
         <div className="mt-6 text-center">
           <Link
-            to="/signin"
+            to="/signIn"
             className="inline-flex items-center gap-1.5 text-xs font-bold text-[#3b82f6] hover:underline"
           >
             <FiArrowLeft className="h-3.5 w-3.5" />

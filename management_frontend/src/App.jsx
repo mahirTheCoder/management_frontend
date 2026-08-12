@@ -10,6 +10,7 @@ import SignUp from "./pages/SignUp";
 import VerifyOTP from "./pages/VerifyOTP";
 import ResendOTP from "./pages/ResendOTP";
 import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
           <Route path="/VerifyOTP" element={<VerifyOTP />} />
           <Route path="/ResendOTP" element={<ResendOTP />} />
           <Route path="/ForgotPassword" element={<ForgotPassword />} />
+          <Route path="/ResetPassword" element={<ResetPassword />} />
 
           {/* Protected Route */}
         </Routes>
