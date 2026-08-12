@@ -284,7 +284,6 @@ const SignUp = () => {
 
                 {!loading && <FiArrowRight className="h-4 w-4" />}
               </button>
-              
             </div>
           </form>
         </div>
@@ -299,17 +298,14 @@ const SignUp = () => {
           >
             Sign In
           </Link>
-        
         </div>
         <div className="mt-6 text-center text-xs font-medium text-[#64748b]">
-       
           {/* <Link
             to="/VerifyOTP"
             className="font-bold text-[#3b82f6] hover:underline"
           >
             VerifyOTP
           </Link> */}
-        
         </div>
       </div>
     </main>

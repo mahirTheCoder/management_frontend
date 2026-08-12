@@ -30,8 +30,7 @@ const ForgotPassword = () => {
 
       if (res.data?.success) {
         toast.success(
-          res.data?.message ||
-            "Password reset link sent to your email!"
+          res.data?.message || "Password reset link sent to your email!",
         );
       }
     } catch (error) {
@@ -41,15 +40,11 @@ const ForgotPassword = () => {
       const message = error.response?.data?.message;
 
       if (status === 404) {
-        toast.error(
-          message || "No account found with this email"
-        );
+        toast.error(message || "No account found with this email");
         return;
       }
 
-      toast.error(
-        message || "Failed to send password reset link"
-      );
+      toast.error(message || "Failed to send password reset link");
     } finally {
       setLoading(false);
     }
@@ -58,7 +53,6 @@ const ForgotPassword = () => {
   return (
     <main className="min-h-screen bg-[#e6e9ef] text-[#2d3748] flex items-center justify-center p-4">
       <div className="w-full max-w-105 neu-card p-6 sm:p-8">
-
         {/* ================= HEADER ================= */}
         <div className="mb-6 text-center">
           <h1 className="text-xl font-bold tracking-wider text-[#3a4454] uppercase">
@@ -72,11 +66,7 @@ const ForgotPassword = () => {
 
         {/* ================= FORM CONTAINER ================= */}
         <div className="neu-container-inset p-6">
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col gap-4"
-          >
-
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             {/* ================= EMAIL ================= */}
             <div className="flex flex-col gap-1.5">
               <label
@@ -105,11 +95,7 @@ const ForgotPassword = () => {
                       setError(false);
                     }
                   }}
-                  placeholder={
-                    error
-                      ? "Email is required"
-                      : "Enter your email"
-                  }
+                  placeholder={error ? "Email is required" : "Enter your email"}
                   className="w-full bg-transparent text-sm text-[#2d3748] outline-none placeholder:text-[#a0aec0]"
                 />
               </div>
@@ -123,11 +109,8 @@ const ForgotPassword = () => {
             >
               {loading ? "Sending..." : "SEND RESET LINK"}
 
-              {!loading && (
-                <FiArrowRight className="h-4 w-4" />
-              )}
+              {!loading && <FiArrowRight className="h-4 w-4" />}
             </button>
-
           </form>
         </div>
 
@@ -141,7 +124,6 @@ const ForgotPassword = () => {
             Back to Sign In
           </Link>
         </div>
-
       </div>
     </main>
   );
