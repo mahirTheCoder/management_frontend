@@ -112,7 +112,7 @@ const SignIn = () => {
 
   return (
     <main className="min-h-screen bg-[#e6e9ef] text-[#2d3748] flex items-center justify-center p-4">
-      <div className="w-full max-w-[460px] neu-card p-6 sm:p-10">
+      <div className="w-full max-w-115 neu-card p-6 sm:p-10">
 
         {/* ================= HEADER ================= */}
         <div className="mb-8 text-center">
@@ -136,7 +136,7 @@ const SignIn = () => {
               </label>
 
               <div
-                className={`neu-input-wrapper relative flex h-[48px] items-center px-4 ${
+                className={`neu-input-wrapper relative flex h-12 items-center px-4 ${
                   errors.email ? "neu-input-error" : ""
                 }`}
               >
@@ -160,7 +160,7 @@ const SignIn = () => {
               </label>
 
               <div
-                className={`neu-input-wrapper relative flex h-[48px] items-center px-4 ${
+                className={`neu-input-wrapper relative flex h-12 items-center px-4 ${
                   errors.password ? "neu-input-error" : ""
                 }`}
               >
@@ -226,10 +226,10 @@ const SignIn = () => {
         <div className="mt-6 text-center text-xs font-medium text-[#64748b]">
           Don't have an account?{" "}
           <Link
-            to="/register"
+            to="/signUp"
             className="font-bold text-[#3b82f6] hover:underline"
           >
-            Register Now
+            signUp
           </Link>
         </div>
 

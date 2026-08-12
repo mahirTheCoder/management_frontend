@@ -10,7 +10,7 @@ const ProtectedRoute = ({ children }) => {
   if (loading) return null;
 
   // Login করা নেই
-  if (!user) return <Navigate to="/login" replace />;
+  if (!user) return <Navigate to="/signIn" replace />;
 
   // Login করা আছে
   return children;

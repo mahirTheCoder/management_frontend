@@ -6,6 +6,7 @@ import SignIn from "./pages/SignIn";
 
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./Componets/ui/ProtectedRoute";
+import SignUp from "./pages/SignUp";
 
 const App = () => {
   return (
@@ -21,8 +22,8 @@ const App = () => {
             }
           />
           {/* Public Route */}
-          <Route path="/login" element={<SignIn />} />
-          <Route path="/login" element={<SignIn />} />
+          <Route path="/signIn" element={<SignIn />} />
+          <Route path="/signUp" element={<SignUp />} />
 
           {/* Protected Route */}
         </Routes>
