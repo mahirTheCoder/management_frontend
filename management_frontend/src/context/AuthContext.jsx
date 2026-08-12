@@ -1,6 +1,5 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import api from "../service/api";
-import { useEffect } from "react";
 
 const AuthContext = createContext();
 
@@ -8,14 +7,21 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  //   ----------get profile
+  // ---------- Get Profile ----------
   const getProfile = async () => {
     try {
       const res = await api.get("/auth/getProfile");
+
       setUser(res.data.user);
     } catch (error) {
-      setUser(null);
+      // User is not logged in
+      if (error.response?.status === 401) {
+        setUser(null);
+        return;
+      }
+
       console.error("Error fetching profile:", error);
+      setUser(null);
     } finally {
       setLoading(false);
     }
@@ -32,6 +38,7 @@ export const AuthProvider = ({ children }) => {
         setUser,
         loading,
         setLoading,
+        getProfile,
       }}
     >
       {children}
