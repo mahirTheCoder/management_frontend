@@ -2,7 +2,7 @@ import React from 'react'
 
 const AdminDetails = () => {
   return (
-<div className="container py-30">
+<div className="">
     admin route working
 </div>
 

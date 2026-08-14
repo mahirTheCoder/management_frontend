@@ -37,7 +37,7 @@ const AdminSidebar = () => {
     setIsOpen(false);
   };
 
-  // ================= MENU =================
+  // ================= MENU (সঠিক Path সহ) =================
   const menuItems = [
     {
       name: "Dashboard",
@@ -72,7 +72,7 @@ const AdminSidebar = () => {
     },
   ];
 
-  // ================= SETTINGS =================
+  // --------------- SETTINGS
   const settingsItems = [
     {
       name: "Settings",
@@ -83,76 +83,52 @@ const AdminSidebar = () => {
 
   return (
     <>
-      {/* =====================================================
-					MOBILE OVERLAY
-			===================================================== */}
-
+      {/* -------------
+                    MOBILE OVERLAY
+             */}
       {isOpen && (
         <div
           onClick={closeSidebar}
-          className={
-            "fixed inset-0 z-40 bg-slate-950/10 backdrop-blur-sm lg:hidden"
-          }
+          className="fixed inset-0 z-40 bg-slate-950/08 backdrop-blur-sm lg:hidden"
         />
       )}
 
-      {/* =====================================================
-					SIDEBAR
-			===================================================== */}
-
+   
       <aside
-        className={`fixed left-0 top-0 z-50 flex h-screen w-70 flex-col
-					border-r border-slate-200 bg-white shadow-xl shadow-slate-200/60 transition-transform duration-300 ease-in-out lg:translate-x-0
-
-					${isOpen ? "translate-x-0" : "-translate-x-full"}`}
+        className={`fixed left-0 top-0 z-50 flex h-screen w-72 flex-col
+                    border-r border-slate-200 bg-white shadow-xl shadow-slate-200/60 transition-transform duration-300 ease-in-out lg:translate-x-0
+                    ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
       >
-        {/* =====================================================
-						HEADER
-				===================================================== */}
 
-        <div
-          className={
-            "flex h-19 shrink-0 items-center justify-between border-b border-slate-100 px-5"
-          }
-        >
+        <div className="flex h-16 shrink-0 items-center justify-between border-b border-slate-100 px-5">
           {/* BRAND */}
-
           <div className="flex items-center gap-3">
-            <div
-              className={
-                "flex h-10 w-10 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-lg shadow-indigo-600/20"
-              }
-            >
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-600 text-white shadow-lg shadow-indigo-600/20">
               <FiShield className="h-5 w-5" />
             </div>
 
             <div>
               <h1 className="text-[15px] font-bold tracking-tight text-slate-900">
-                Admin
-                <span className="text-indigo-600">Panel</span>
+                Admin <span className="text-indigo-600">Panel</span>
               </h1>
 
-              <p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+              <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-slate-400">
                 Control Center
               </p>
             </div>
           </div>
 
           {/* MOBILE CLOSE */}
-
           <button
             type="button"
             onClick={closeSidebar}
-            className={
-              "flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 text-slate-500 transition hover:bg-slate-50 hover:text-slate-900 lg:hidden"
-            }
+            className="flex h-8 w-8 items-center justify-center rounded-lg border border-slate-200 text-slate-500 transition hover:bg-slate-50 hover:text-slate-900 lg:hidden"
           >
             <FiX className="h-4 w-4" />
           </button>
         </div>
 
         {/* MAIN NAV */}
-
         <nav className="flex-1 overflow-y-auto px-4 py-6">
           <div className="mb-3 px-3">
             <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400">
@@ -171,7 +147,11 @@ const AdminSidebar = () => {
                   end={item.end}
                   onClick={closeSidebar}
                   className={({ isActive }) =>
-                    `group relative flex items-center gap-3 rounded-xl px-3.5 py-3 text-[12px] font-semibold transition-all duration-200 ${isActive ? `bg-indigo-50 text-indigo-600` : `text-slate-600 hover:bg-slate-50 hover:text-slate-900`}`
+                    `group relative flex items-center gap-3 rounded-xl px-3.5 py-3 text-[12px] font-semibold transition-all duration-200 ${
+                      isActive
+                        ? "bg-indigo-50 text-indigo-600"
+                        : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                    }`
                   }
                 >
                   {({ isActive }) => (
@@ -181,7 +161,11 @@ const AdminSidebar = () => {
                       )}
 
                       <Icon
-                        className={`h-[17px] w-[17px] shrink-0 transition-transform duration-200 group-hover:scale-110 ${isActive ? "text-indigo-600" : "text-slate-400 group-hover:text-slate-600"}`}
+                        className={`h-[17px] w-[17px] shrink-0 transition-transform duration-200 group-hover:scale-110 ${
+                          isActive
+                            ? "text-indigo-600"
+                            : "text-slate-400 group-hover:text-slate-600"
+                        }`}
                       />
 
                       <span>{item.name}</span>
@@ -214,7 +198,11 @@ const AdminSidebar = () => {
                   to={item.path}
                   onClick={closeSidebar}
                   className={({ isActive }) =>
-                    `group relative flex items-center gap-3 rounded-xl px-3.5 py-3 text-[12px] font-semibold transition-all duration-200 ${isActive ? "bg-indigo-50 text-indigo-600" : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"}`
+                    `group relative flex items-center gap-3 rounded-xl px-3.5 py-3 text-[12px] font-semibold transition-all duration-200 ${
+                      isActive
+                        ? "bg-indigo-50 text-indigo-600"
+                        : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                    }`
                   }
                 >
                   {({ isActive }) => (
@@ -223,7 +211,9 @@ const AdminSidebar = () => {
                         <span className="absolute left-0 top-1/2 h-6 w-1 -translate-y-1/2 rounded-r-full bg-indigo-600" />
                       )}
                       <Icon
-                        className={`h-[17px] w-[17px] ${isActive ? "text-indigo-600" : "text-slate-400"}`}
+                        className={`h-[17px] w-[17px] ${
+                          isActive ? "text-indigo-600" : "text-slate-400"
+                        }`}
                       />
                       <span>{item.name}</span>
                     </>
@@ -235,7 +225,6 @@ const AdminSidebar = () => {
         </nav>
 
         {/* ADMIN FOOTER */}
-
         <div className="shrink-0 border-t border-slate-100 p-4">
           <div className="mb-3 flex items-center gap-3 rounded-xl border border-slate-100 bg-slate-50 p-3">
             <div className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-indigo-600 text-xs font-bold text-white">
@@ -264,12 +253,11 @@ const AdminSidebar = () => {
       </aside>
 
       {/* MOBILE OPEN BUTTON */}
-
       {!isOpen && (
         <button
           type="button"
           onClick={() => setIsOpen(true)}
-          className="fixed left-4 top-4 z-30 flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 shadow-lg transition hover:text-indigo-600 lg:hidden"
+          className="fixed left-4 top-3.5 z-30 flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-600 shadow-sm transition hover:text-indigo-600 lg:hidden"
         >
           <FiMenu className="h-5 w-5" />
         </button>
