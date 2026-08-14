@@ -1,11 +1,12 @@
-import { getAllUsers } from "../../service/adminApi";
+import React from 'react'
 
-const fetchUsers = async () => {
-  try {
-    const res = await getAllUsers();
+const AdminDetails = () => {
+  return (
+<div className="container py-30">
+    admin route working
+</div>
 
-    console.log("All Users:", res.data);
-  } catch (error) {
-    console.error("Get Users Error:", error);
-  }
-};
+)
+}
+
+export default AdminDetails

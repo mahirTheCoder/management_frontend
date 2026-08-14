@@ -11,9 +11,11 @@ import {
 } from "react-icons/fi";
 
 import { signin } from "../../service/authApi";
+import { useAuth } from "../../context/AuthContext";
 
 const Signin = () => {
   const navigate = useNavigate();
+  const { setUser } = useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -53,7 +55,6 @@ const Signin = () => {
     const email = formData.email.trim();
     const password = formData.password.trim();
 
-    // ---------- Validation ----------
     const emailEmpty = !email;
     const passwordEmpty = !password;
 
@@ -69,7 +70,6 @@ const Signin = () => {
     try {
       setLoading(true);
 
-      // authApi.js থেকে signin
       const res = await signin({
         email,
         password,
@@ -77,36 +77,39 @@ const Signin = () => {
 
       console.log("SIGN IN RESPONSE:", res.data);
 
+      // ================= LOGIN SUCCESS =================
       if (res.data?.success) {
         const user = res.data?.user;
 
-        toast.success(res.data?.message || "Login successful");
-
-        // ================= ROLE CHECK =================
-
-        if (!user?.role) {
-          console.error("Role not found:", user);
-
-          toast.error("User role not found");
+        // Backend থেকে user না এলে
+        if (!user) {
+          console.error("User data missing:", res.data);
+          toast.error("User information not found");
           return;
         }
 
+        // ================= SET USER IN AUTH CONTEXT =================
+        setUser(user);
+
+        toast.success(res.data?.message || "Login successful");
+
+        // ================= ROLE BASED REDIRECT =================
+
         if (user.role === "admin") {
-          navigate("/adminDashboard");
+          navigate("/", { replace: true });
           return;
         }
 
         if (user.role === "teacher") {
-          navigate("/teacherDashboard");
+          navigate("/teacherDashboard", { replace: true });
           return;
         }
 
         if (user.role === "student") {
-          navigate("/studentDashboard");
+          navigate("/studentDashboard", { replace: true });
           return;
         }
 
-        // Unknown role
         toast.error("Invalid user role");
       }
     } catch (error) {
@@ -132,7 +135,7 @@ const Signin = () => {
         ) {
           toast.error("Please verify your email first");
 
-          navigate("/verify-otp", {
+          navigate("/VerifyOTP", {
             state: {
               email,
             },
@@ -244,7 +247,9 @@ const Signin = () => {
 
                 <button
                   type="button"
-                  onClick={() => setShowPassword((prev) => !prev)}
+                  onClick={() =>
+                    setShowPassword((prev) => !prev)
+                  }
                   className="absolute right-3 text-[#a0aec0] hover:text-[#4a5568] transition-colors"
                 >
                   {showPassword ? (
@@ -302,7 +307,7 @@ const Signin = () => {
             to="/signUp"
             className="font-bold text-[#3b82f6] hover:underline"
           >
-            signUp
+            Sign Up
           </Link>
         </div>
 

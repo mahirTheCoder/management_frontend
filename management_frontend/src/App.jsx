@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./Componets/ui/ProtectedRoute";
@@ -13,53 +13,35 @@ import ResetPassword from "./pages/Auth/ResetPassword";
 
 // Admin
 import AdminLayout from "./Componets/Layout/AdminLayout";
-import Admin from "./pages/Admin_Dashboard/Admin";
+import Admin from "./pages/Admin_Dashboard/Admin.jsx"
 
 const App = () => {
   return (
     <BrowserRouter>
       <AuthProvider>
-
         <Routes>
 
-          {/* ------------- PUBLIC ROUTES  */}
-
+          {/* ------------- PUBLIC ROUTES ------------- */}
           <Route path="/signIn" element={<SignIn />} />
-
           <Route path="/signUp" element={<SignUp />} />
-
           <Route path="/VerifyOTP" element={<VerifyOTP />} />
-
           <Route path="/ResendOTP" element={<ResendOTP />} />
+          <Route path="/ForgotPassword" element={<ForgotPassword />} />
+          <Route path="/ResetPassword" element={<ResetPassword />} />
 
+          {/* ------------- ADMIN ROUTES ------------- */}
           <Route
-            path="/ForgotPassword"
-            element={<ForgotPassword />}
-          />
-
-          <Route
-            path="/ResetPassword"
-            element={<ResetPassword />}
-          />
-
-
-          {/* --------- ADMIN ROUTES  */}
-
-          <Route
-            path="/admin"
+            path="/"
             element={
               <ProtectedRoute allowedRoles={["admin"]}>
                 <AdminLayout />
               </ProtectedRoute>
             }
           >
-            {/* /admin */}
+            {/* /admin পাথে ভিজিট করলে ড্যাশবোর্ড (Admin) দেখাবে */}
             <Route index element={<Admin />} />
-
           </Route>
-
         </Routes>
-
       </AuthProvider>
     </BrowserRouter>
   );

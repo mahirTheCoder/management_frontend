@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { getProfile } from "../service/authApi";
+import api from "../service/api";
 
 const AuthContext = createContext();
 
@@ -8,25 +8,30 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   // ================= GET PROFILE =================
-  const fetchProfile = async () => {
+  const getProfile = async () => {
     try {
-      const res = await getProfile();
+      const res = await api.get("/auth/getProfile");
 
-      if (res?.success) {
-        setUser(res.user);
+      if (res.data?.success && res.data?.user) {
+        setUser(res.data.user);
       } else {
         setUser(null);
       }
     } catch (error) {
-      setUser(null);
+      if (error.response?.status === 401) {
+        setUser(null);
+      } else {
+        console.error("Get Profile Error:", error);
+        setUser(null);
+      }
     } finally {
       setLoading(false);
     }
   };
 
-  // ================= CHECK AUTH =================
+  // ================= INITIAL AUTH CHECK =================
   useEffect(() => {
-    fetchProfile();
+    getProfile();
   }, []);
 
   return (
@@ -36,7 +41,7 @@ export const AuthProvider = ({ children }) => {
         setUser,
         loading,
         setLoading,
-        fetchProfile,
+        getProfile,
       }}
     >
       {children}
