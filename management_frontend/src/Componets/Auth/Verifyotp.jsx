@@ -3,9 +3,9 @@ import { useNavigate, useLocation } from "react-router";
 import toast from "react-hot-toast";
 import { FiArrowRight } from "react-icons/fi";
 
-import { verifyOtp, resendOtp } from "../service/authApi";
+import { verifyOtp, resendOtp } from "../../service/authApi";
 
-const VerifyOTP = () => {
+const Verifyotp = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -231,4 +231,4 @@ const VerifyOTP = () => {
   );
 };
 
-export default VerifyOTP;
+export default Verifyotp;
