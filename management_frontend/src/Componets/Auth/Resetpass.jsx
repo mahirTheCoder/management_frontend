@@ -3,9 +3,9 @@ import { useNavigate, useParams } from "react-router";
 import toast from "react-hot-toast";
 import { FiLock, FiEye, FiEyeOff, FiCheckCircle } from "react-icons/fi";
 
-import { resetPassword } from "../service/authApi";
+import { resetPassword } from "../../service/authApi";
 
-const ResetPassword = () => {
+const Resetpass = () => {
   const navigate = useNavigate();
   const { token } = useParams();
 
@@ -199,4 +199,4 @@ const ResetPassword = () => {
   );
 };
 
-export default ResetPassword;
+export default Resetpass;

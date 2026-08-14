@@ -306,6 +306,7 @@ const Signup = () => {
           >
             VerifyOTP
           </Link> */}
+          
         </div>
       </div>
     </main>

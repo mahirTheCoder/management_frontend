@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { FiRefreshCw } from "react-icons/fi";
 
-import api from "../service/api";
+import api from "../../service/api";
+import { resendOtp } from "../../service/authApi";
 
-const ResendOTP = ({ email, initialTime = 60, onResendSuccess }) => {
+const Resendotp = ({ email, initialTime = 60, onResendSuccess }) => {
   const [timer, setTimer] = useState(initialTime);
   const [canResend, setCanResend] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -30,9 +31,12 @@ const ResendOTP = ({ email, initialTime = 60, onResendSuccess }) => {
     try {
       setLoading(true);
 
-      const res = await api.post("/auth/resendOtp", {
-        email,
-      });
+      const res = await resendOtp({
+        email
+      })
+      
+      
+  
 
       if (res.data?.success) {
         toast.success("New OTP sent to your email!");
@@ -79,4 +83,4 @@ const ResendOTP = ({ email, initialTime = 60, onResendSuccess }) => {
   );
 };
 
-export default ResendOTP;
+export default Resendotp;
