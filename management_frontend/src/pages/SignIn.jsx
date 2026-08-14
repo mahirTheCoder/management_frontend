@@ -2,15 +2,21 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import toast from "react-hot-toast";
 
-import { FiMail, FiLock, FiEye, FiEyeOff, FiArrowRight } from "react-icons/fi";
+import {
+  FiMail,
+  FiLock,
+  FiEye,
+  FiEyeOff,
+  FiArrowRight,
+} from "react-icons/fi";
 
-import api from "../service/api";
 import { signin } from "../service/authApi";
 
 const SignIn = () => {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -44,28 +50,64 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const emailEmpty = !formData.email.trim();
-    const passwordEmpty = !formData.password.trim();
+    const email = formData.email.trim();
+    const password = formData.password.trim();
+
+    // ---------- Validation ----------
+    const emailEmpty = !email;
+    const passwordEmpty = !password;
 
     if (emailEmpty || passwordEmpty) {
       setErrors({
         email: emailEmpty,
         password: passwordEmpty,
       });
+
       return;
     }
 
     try {
       setLoading(true);
 
+      // authApi.js থেকে signin
       const res = await signin({
-        email: formData.email,
-        password: formData.password,
+        email,
+        password,
       });
 
-      if (res.data.success) {
-        toast.success("Login successful");
-        navigate("/");
+      console.log("SIGN IN RESPONSE:", res.data);
+
+      if (res.data?.success) {
+        const user = res.data?.user;
+
+        toast.success(res.data?.message || "Login successful");
+
+        // ================= ROLE CHECK =================
+
+        if (!user?.role) {
+          console.error("Role not found:", user);
+
+          toast.error("User role not found");
+          return;
+        }
+
+        if (user.role === "admin") {
+          navigate("/adminDashboard");
+          return;
+        }
+
+        if (user.role === "teacher") {
+          navigate("/teacherDashboard");
+          return;
+        }
+
+        if (user.role === "student") {
+          navigate("/studentDashboard");
+          return;
+        }
+
+        // Unknown role
+        toast.error("Invalid user role");
       }
     } catch (error) {
       console.error("Signin Error:", error);
@@ -73,29 +115,45 @@ const SignIn = () => {
       const status = error.response?.status;
       const message = error.response?.data?.message;
 
-      if (
-        status === 403 &&
-        message === "Your account is waiting for admin approval"
-      ) {
-        toast.error("Your account is waiting for admin approval");
-        return;
+      // ================= PENDING APPROVAL =================
+      if (status === 403) {
+        if (
+          message === "Your account is waiting for admin approval" ||
+          message?.toLowerCase().includes("approval")
+        ) {
+          toast.error("Your account is waiting for admin approval");
+          return;
+        }
+
+        // ================= EMAIL NOT VERIFIED =================
+        if (
+          message === "Please verify your email first" ||
+          message?.toLowerCase().includes("verify")
+        ) {
+          toast.error("Please verify your email first");
+
+          navigate("/verify-otp", {
+            state: {
+              email,
+            },
+          });
+
+          return;
+        }
       }
 
-      if (status === 403 && message === "Please verify your email first") {
-        toast.error("Please verify your email first");
-        return;
-      }
-
+      // ================= INVALID LOGIN =================
       if (status === 401) {
         setErrors({
           email: true,
           password: true,
         });
 
-        toast.error("Invalid email or password");
+        toast.error(message || "Invalid email or password");
         return;
       }
 
+      // ================= OTHER ERROR =================
       toast.error(message || "Something went wrong");
     } finally {
       setLoading(false);
@@ -105,6 +163,7 @@ const SignIn = () => {
   return (
     <main className="min-h-screen bg-[#e6e9ef] text-[#2d3748] flex items-center justify-center p-4">
       <div className="w-full max-w-115 neu-card p-6 sm:p-10">
+
         {/* ================= HEADER ================= */}
         <div className="mb-8 text-center">
           <h1 className="text-2xl font-black tracking-wider uppercase text-[#3a4454]">
@@ -112,13 +171,15 @@ const SignIn = () => {
           </h1>
         </div>
 
-        {/* ================= INSET FORM SECTION ================= */}
+        {/* ================= FORM SECTION ================= */}
         <div className="neu-container-inset p-6 sm:p-8">
+
           <p className="text-center text-sm font-medium text-[#5a677d] mb-6">
             Sign In To Your Account
           </p>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+
             {/* ================= EMAIL ================= */}
             <div className="flex flex-col gap-1.5">
               <label
@@ -134,6 +195,7 @@ const SignIn = () => {
                 }`}
               >
                 <FiMail className="text-[#a0aec0] h-4 w-4 shrink-0 mr-3" />
+
                 <input
                   id="email"
                   name="email"
@@ -141,7 +203,9 @@ const SignIn = () => {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder={
-                    errors.email ? "Email is required" : "Enter your email"
+                    errors.email
+                      ? "Email is required"
+                      : "Enter your email"
                   }
                   className="w-full bg-transparent text-sm text-[#2d3748] outline-none placeholder:text-[#a0aec0]"
                 />
@@ -163,6 +227,7 @@ const SignIn = () => {
                 }`}
               >
                 <FiLock className="text-[#a0aec0] h-4 w-4 shrink-0 mr-3" />
+
                 <input
                   id="password"
                   name="password"
@@ -190,6 +255,7 @@ const SignIn = () => {
                 </button>
               </div>
 
+              {/* Forgot Password */}
               <div className="flex justify-end mt-1">
                 <Link
                   to="/ForgotPassword"
@@ -206,10 +272,11 @@ const SignIn = () => {
                 type="checkbox"
                 className="rounded accent-[#4b5563] cursor-pointer"
               />
+
               <span>Remember me</span>
             </label>
 
-            {/* ================= SUBMIT BUTTON ================= */}
+            {/* ================= SUBMIT ================= */}
             <div className="mt-2 flex justify-center">
               <button
                 type="submit"
@@ -217,15 +284,20 @@ const SignIn = () => {
                 className="neu-button px-8 py-2.5 text-xs font-bold uppercase tracking-wider text-[#3a4454] flex items-center justify-center gap-2 hover:text-[#1a202c] disabled:opacity-60"
               >
                 {loading ? "Signing in..." : "SIGN IN"}
-                {!loading && <FiArrowRight className="h-4 w-4" />}
+
+                {!loading && (
+                  <FiArrowRight className="h-4 w-4" />
+                )}
               </button>
             </div>
+
           </form>
         </div>
 
-        {/* ================= FOOTER / REGISTER ================= */}
+        {/* ================= REGISTER ================= */}
         <div className="mt-6 text-center text-xs font-medium text-[#64748b]">
           Don't have an account?{" "}
+
           <Link
             to="/signUp"
             className="font-bold text-[#3b82f6] hover:underline"
@@ -233,6 +305,7 @@ const SignIn = () => {
             signUp
           </Link>
         </div>
+
       </div>
     </main>
   );
