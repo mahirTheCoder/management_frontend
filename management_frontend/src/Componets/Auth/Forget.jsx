@@ -3,9 +3,9 @@ import { Link } from "react-router";
 import toast from "react-hot-toast";
 import { FiMail, FiArrowRight, FiArrowLeft } from "react-icons/fi";
 
-import { forgotPassword } from "../service/authApi";
+import { forgotPassword } from "../../service/authApi";
 
-const ForgotPassword = () => {
+const Forget = () => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -129,4 +129,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default Forget;

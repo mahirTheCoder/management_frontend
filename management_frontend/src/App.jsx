@@ -2,15 +2,17 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
-import SignIn from "./pages/SignIn";
+// import SignIn from "./pages/SignIn";
 
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./Componets/ui/ProtectedRoute";
 import SignUp from "./pages/SignUp";
 import VerifyOTP from "./pages/VerifyOTP";
 import ResendOTP from "./pages/ResendOTP";
-import ForgotPassword from "./pages/ForgotPassword";
+// import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import ForgotPassword from "./pages/Auth/ForgotPassword";
+import SignIn from "./pages/Auth/SignIn";
 
 const App = () => {
   return (

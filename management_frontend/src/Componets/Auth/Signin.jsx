@@ -10,9 +10,9 @@ import {
   FiArrowRight,
 } from "react-icons/fi";
 
-import { signin } from "../service/authApi";
+import { signin } from "../../service/authApi";
 
-const SignIn = () => {
+const Signin = () => {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -311,4 +311,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default Signin;
