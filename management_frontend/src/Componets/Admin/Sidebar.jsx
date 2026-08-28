@@ -161,7 +161,7 @@ const AdminSidebar = () => {
                       )}
 
                       <Icon
-                        className={`h-[17px] w-[17px] shrink-0 transition-transform duration-200 group-hover:scale-110 ${
+                        className={`h-4.5 w-4.5 shrink-0 transition-transform duration-200 group-hover:scale-110 ${
                           isActive
                             ? "text-indigo-600"
                             : "text-slate-400 group-hover:text-slate-600"
@@ -211,7 +211,7 @@ const AdminSidebar = () => {
                         <span className="absolute left-0 top-1/2 h-6 w-1 -translate-y-1/2 rounded-r-full bg-indigo-600" />
                       )}
                       <Icon
-                        className={`h-[17px] w-[17px] ${
+                        className={`h-4.5 w-4.5 ${
                           isActive ? "text-indigo-600" : "text-slate-400"
                         }`}
                       />
