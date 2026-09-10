@@ -21,6 +21,7 @@ const AdminLayout = () => {
         <div className="p-6">
           {/* সব পেজ কন্টেন্ট (যেমন AdminDetails) এখানে লোড হবে এবং সুন্দরভাবে স্ক্রোল হবে */}
           <Outlet />
+          
         </div>
       </main>
     </div>

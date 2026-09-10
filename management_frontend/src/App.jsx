@@ -13,14 +13,16 @@ import ResetPassword from "./pages/Auth/ResetPassword";
 
 // Admin
 import AdminLayout from "./Componets/Layout/AdminLayout";
-import Admin from "./pages/Admin_Dashboard/Admin.jsx"
+import Admin from "./pages/Admin_Dashboard/Admin.jsx";
+
+// -- Payment
+import Payments from "./pages/payment/payments.jsx";
 
 const App = () => {
   return (
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-
           {/* ------------- PUBLIC ROUTES ------------- */}
           <Route path="/signIn" element={<SignIn />} />
           <Route path="/signUp" element={<SignUp />} />
@@ -38,8 +40,9 @@ const App = () => {
               </ProtectedRoute>
             }
           >
-            {/* /admin পাথে ভিজিট করলে ড্যাশবোর্ড (Admin) দেখাবে */}
             <Route index element={<Admin />} />
+            <Route path="payment" element={<Payments />} />
+
           </Route>
         </Routes>
       </AuthProvider>

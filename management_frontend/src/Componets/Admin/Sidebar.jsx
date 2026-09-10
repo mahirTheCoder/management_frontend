@@ -70,6 +70,11 @@ const AdminSidebar = () => {
       path: "/",
       icon: FiCheckCircle,
     },
+    {
+      name: "Payment ",
+      path: "/payment",
+      icon: FiCheckCircle,
+    },
   ];
 
   // --------------- SETTINGS
