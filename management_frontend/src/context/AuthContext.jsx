@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // ================= INITIAL AUTH CHECK =================
+// -------initially get profile when the component mounts
   useEffect(() => {
     getProfile();
   }, []);
