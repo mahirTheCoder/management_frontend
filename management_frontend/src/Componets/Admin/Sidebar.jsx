@@ -72,7 +72,7 @@ const AdminSidebar = () => {
     },
     {
       name: "Payment ",
-      path: "/payment",
+      path: "/paymentSuccess",
       icon: FiCheckCircle,
     },
   ];

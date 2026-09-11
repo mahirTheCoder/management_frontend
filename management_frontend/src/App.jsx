@@ -42,17 +42,15 @@ const App = () => {
           >
             <Route index element={<Admin />} />
 
-            {/* Normal Payment Page */}
-            <Route path="payment" element={<Payments />} />
 
             {/* SSLCommerz Success */}
-            <Route path="payment/success" element={<Payments />} />
+            <Route path="/paymentSuccess" element={<Payments />} />
 
             {/* SSLCommerz Fail */}
-            {/* <Route path="payment/fail" element={<Payments />} /> */}
+            {/* <Route path="paymentFail" element={<Payments />} /> */}
 
             {/* SSLCommerz Cancel */}
-            {/* <Route path="payment/cancel" element={<Payments />} /> */}
+            {/* <Route path="paymentCancel" element={<Payments />} /> */}
           </Route>
         </Routes>
       </AuthProvider>
