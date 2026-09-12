@@ -14,6 +14,7 @@ import ResetPassword from "./pages/Auth/ResetPassword";
 // Admin
 import AdminLayout from "./Componets/Layout/AdminLayout";
 import Admin from "./pages/Admin_Dashboard/Admin.jsx";
+import Admin_Details from "./Componets/Admin/Admin_Details.jsx";
 
 // -- Payment
 import Payments from "./pages/payment/payments.jsx";
@@ -41,6 +42,7 @@ const App = () => {
             }
           >
             <Route index element={<Admin />} />
+            <Route path="/admin-details" element={<Admin_Details />} />
 
 
             {/* SSLCommerz Success */}

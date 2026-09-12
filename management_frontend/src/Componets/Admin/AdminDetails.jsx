@@ -1,12 +1,9 @@
 import React from 'react'
 
-const AdminDetails = () => {
+const AdminPage = () => {
   return (
-<div className="">
-    admin route working
-</div>
-
-)
+    <div>admin page connected</div>
+  )
 }
 
-export default AdminDetails
+export default AdminPage

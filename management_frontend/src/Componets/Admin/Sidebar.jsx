@@ -47,7 +47,7 @@ const AdminSidebar = () => {
     },
     {
       name: "Admin Profile",
-      path: "/",
+      path: "/admin-details",
       icon: FiUser,
     },
     {
