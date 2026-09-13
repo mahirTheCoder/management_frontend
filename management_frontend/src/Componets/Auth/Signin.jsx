@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import toast from "react-hot-toast";
 
 import {
@@ -15,12 +15,13 @@ import { useAuth } from "../../context/AuthContext";
 
 const Signin = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { setUser } = useAuth();
 
   const [showPassword, setShowPassword] = useState(false);
 
   const [formData, setFormData] = useState({
-    email: "",
+    email: location.state?.email || "",
     password: "",
   });
 

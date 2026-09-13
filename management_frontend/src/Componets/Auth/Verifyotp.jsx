@@ -13,7 +13,6 @@ const Verifyotp = () => {
 
   const [otp, setOtp] = useState(["", "", "", ""]);
   const [timer, setTimer] = useState(60);
-  const [canResend, setCanResend] = useState(false);
   const [loading, setLoading] = useState(false);
   const [resendLoading, setResendLoading] = useState(false);
 
@@ -30,7 +29,6 @@ const Verifyotp = () => {
       return () => clearInterval(interval);
     }
 
-    setCanResend(true);
   }, [timer]);
 
   // ================= INPUT CHANGE =================
@@ -95,10 +93,13 @@ const Verifyotp = () => {
         otp: otpString,
       });
 
-      if (res.data.success) {
-        toast.success("OTP Verified Successfully!");
+      if (res.data?.success || res.status === 200) {
+        toast.success(res.data?.message || "OTP Verified Successfully!");
 
-        navigate("/signIn");
+        navigate("/signIn", {
+          replace: true,
+          state: { email },
+        });
       }
     } catch (error) {
       console.error("Verify OTP Error:", error);
@@ -131,8 +132,6 @@ const Verifyotp = () => {
 
         // Reset timer
         setTimer(60);
-        setCanResend(false);
-
         // Clear OTP
         setOtp(["", "", "", ""]);
 
@@ -209,7 +208,7 @@ const Verifyotp = () => {
           {/* ================= RESEND OTP ================= */}
 
           <div className="mt-6 text-center text-xs">
-            {canResend ? (
+            {timer <= 0 ? (
               <button
                 type="button"
                 onClick={handleResend}

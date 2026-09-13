@@ -14,10 +14,12 @@ import ResetPassword from "./pages/Auth/ResetPassword";
 // Admin
 import AdminLayout from "./Componets/Layout/AdminLayout";
 import Admin from "./pages/Admin_Dashboard/Admin.jsx";
-import Admin_Details from "./Componets/Admin/Admin_Details.jsx";
+import Students from "./pages/Admin_Dashboard/Students.jsx";
+import Teachers from "./pages/Admin_Dashboard/Teachers.jsx";
 
 // -- Payment
 import Payments from "./pages/payment/payments.jsx";
+import AdminDetails from "./Componets/Admin/AdminDetails.jsx";
 
 const App = () => {
   return (
@@ -42,7 +44,9 @@ const App = () => {
             }
           >
             <Route index element={<Admin />} />
-            <Route path="/admin-details" element={<Admin_Details />} />
+            <Route path="/students" element={<Students />} />
+            <Route path="/teachers" element={<Teachers />} />
+            <Route path="/admin-details" element={<AdminDetails />} />
 
 
             {/* SSLCommerz Success */}

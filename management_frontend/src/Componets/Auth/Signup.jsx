@@ -12,7 +12,6 @@ import {
   FiArrowRight,
 } from "react-icons/fi";
 
-import api from "../../service/api";
 import { signup } from "../../service/authApi";
 
 const Signup = () => {
@@ -78,26 +77,36 @@ const Signup = () => {
       // ================= API =================
 
       const res = await signup({
-        fullname,
-        email,
-        password,
+        fullname: formData.fullname.trim(),
+        email: formData.email.trim(),
+        password: formData.password,
+        role: formData.role,
       });
 
       // ================= SUCCESS =================
 
-      if (res.data.success) {
-        toast.success("OTP sent to your email");
+      if (res.data?.success || res.status === 201) {
+        toast.success(res.data?.message || "OTP sent to your email");
 
         navigate("/VerifyOTP", {
           state: {
-            email: formData.email,
+            email: formData.email.trim(),
           },
         });
       }
     } catch (error) {
       console.error("Signup Error:", error);
 
-      const message = error.response?.data?.message;
+      const responseData = error.response?.data;
+      console.error("Signup Error Response:", responseData);
+
+      const message =
+        responseData?.message ||
+        responseData?.error ||
+        responseData?.detail ||
+        (Array.isArray(responseData?.errors)
+          ? responseData.errors.join(", ")
+          : null);
 
       toast.error(message || "Something went wrong during registration");
     } finally {

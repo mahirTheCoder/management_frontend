@@ -52,12 +52,12 @@ const AdminSidebar = () => {
     },
     {
       name: "Students",
-      path: "/",
+      path: "/students",
       icon: FiUsers,
     },
     {
       name: "Teachers",
-      path: "/",
+      path: "/teachers",
       icon: FiBookOpen,
     },
     {
